@@ -76,3 +76,4 @@ A complete, fully functional, responsive academic workflow management web applic
 - **Sound**: Web Audio API Sound Synthesizer
 - **Visuals**: Canvas Confetti
 - **Storage**: Persistent LocalStorage Database Engine with React Context API
+# Workly
