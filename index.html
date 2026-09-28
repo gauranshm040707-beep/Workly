@@ -2,10 +2,30 @@
 <html lang="en" class="h-full">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
   <meta name="description" content="Workly — Dynamic Academic Workflow Management System for College & University Students" />
-  <title>Workly</title>
   
+  <!-- PWA & Theme Meta Tags -->
+  <meta name="theme-color" content="#4f46e5" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#0b0f19" media="(prefers-color-scheme: dark)" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Workly" />
+  <meta name="application-name" content="Workly" />
+  <meta name="msapplication-TileColor" content="#4f46e5" />
+  <meta name="msapplication-TileImage" content="icons/icon-144x144.png" />
+
+  <title>Workly — Academic Workflow System</title>
+  
+  <!-- Manifest & Favicons -->
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192x192.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="icons/icon-72x72.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png" />
+  <link rel="mask-icon" href="favicon.svg" color="#4f46e5" />
+
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -60,12 +80,55 @@
   <!-- Canvas Confetti for celebrations -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 </head>
-<body class="h-full bg-slate-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100 transition-colors duration-200">
+<body class="h-full bg-slate-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100 transition-colors duration-200 select-none">
   
   <!-- Root React Mount Node -->
   <div id="root"></div>
 
+  <!-- Service Worker Registration Script -->
+  <script>
+    window.pwaInstallPrompt = null;
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      window.pwaInstallPrompt = e;
+      window.dispatchEvent(new CustomEvent('pwa-can-install'));
+    });
+
+    window.addEventListener('appinstalled', () => {
+      window.pwaInstallPrompt = null;
+      console.log('[Workly] App installed successfully');
+      window.dispatchEvent(new CustomEvent('pwa-installed'));
+    });
+
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+          .then((registration) => {
+            console.log('[Workly SW] Registered with scope:', registration.scope);
+            
+            // Check for service worker updates
+            registration.addEventListener('updatefound', () => {
+              const newWorker = registration.installing;
+              newWorker.addEventListener('statechange', () => {
+                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                  window.dispatchEvent(new CustomEvent('pwa-update-available'));
+                }
+              });
+            });
+          })
+          .catch((err) => {
+            console.warn('[Workly SW] Registration failed:', err);
+          });
+      });
+    }
+  </script>
+
+  <!-- Supabase JS Client -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+
   <!-- React Application Scripts -->
+  <script src="src_supabase.js"></script>
+  <script type="text/babel" src="src_auth_components.js"></script>
   <script type="text/babel" src="src_engine.js"></script>
   <script type="text/babel" src="src_components.js"></script>
   <script type="text/babel" src="src_app.js"></script>

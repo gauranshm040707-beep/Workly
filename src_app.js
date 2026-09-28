@@ -9,14 +9,81 @@ function AppLayout() {
     profiles, 
     activeUserId, 
     switchProfile, 
+    logoutUser,
     tasks, 
     exams, 
     reminders, 
     subjects 
   } = useAcademic();
 
+  const { user, profile: authProfile, signOut: supabaseSignOut } = useAuth();
+
+  const handleSignOut = () => {
+    logoutUser();
+    supabaseSignOut();
+  };
+
+  // Resolved user display info
+  const displayName = authProfile?.full_name || user?.user_metadata?.full_name || profile?.name || user?.email?.split('@')[0] || 'Student';
+  const displayEmail = authProfile?.email || user?.email || profile?.email || '';
+  const displayAvatar = authProfile?.avatar_url || user?.user_metadata?.avatar_url || profile?.avatarUrl;
+
   const [activeTab, setActiveTab] = useState('dashboard');
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
+
+  // PWA & Connectivity states
+  const [canInstall, setCanInstall] = useState(typeof window !== 'undefined' && !!window.pwaInstallPrompt);
+  const [isOffline, setIsOffline] = useState(typeof navigator !== 'undefined' ? !navigator.onLine : false);
+  const [isUpdateAvailable, setIsUpdateAvailable] = useState(false);
+  const [isInstalled, setIsInstalled] = useState(
+    typeof window !== 'undefined' && (
+      window.matchMedia('(display-mode: standalone)').matches || 
+      window.navigator.standalone === true
+    )
+  );
+
+  useEffect(() => {
+    const handleCanInstall = () => setCanInstall(true);
+    const handleInstalled = () => {
+      setCanInstall(false);
+      setIsInstalled(true);
+    };
+    const handleOnline = () => setIsOffline(false);
+    const handleOffline = () => setIsOffline(true);
+    const handleUpdate = () => setIsUpdateAvailable(true);
+
+    window.addEventListener('pwa-can-install', handleCanInstall);
+    window.addEventListener('pwa-installed', handleInstalled);
+    window.addEventListener('online', handleOnline);
+    window.addEventListener('offline', handleOffline);
+    window.addEventListener('pwa-update-available', handleUpdate);
+
+    return () => {
+      window.removeEventListener('pwa-can-install', handleCanInstall);
+      window.removeEventListener('pwa-installed', handleInstalled);
+      window.removeEventListener('online', handleOnline);
+      window.removeEventListener('offline', handleOffline);
+      window.removeEventListener('pwa-update-available', handleUpdate);
+    };
+  }, []);
+
+  const handleInstallApp = async () => {
+    if (window.pwaInstallPrompt) {
+      window.pwaInstallPrompt.prompt();
+      const choiceResult = await window.pwaInstallPrompt.userChoice;
+      if (choiceResult && choiceResult.outcome === 'accepted') {
+        setCanInstall(false);
+      }
+      window.pwaInstallPrompt = null;
+    }
+  };
+
+  const handleReloadApp = () => {
+    if (navigator.serviceWorker && navigator.serviceWorker.controller) {
+      navigator.serviceWorker.controller.postMessage({ type: 'SKIP_WAITING' });
+    }
+    window.location.reload();
+  };
 
   // Modals state
   const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
@@ -172,7 +239,30 @@ function AppLayout() {
         </div>
 
         {/* User Mini Profile & Quick Switch Footer */}
-        <div className="p-4 border-t border-gray-100 dark:border-gray-800 space-y-2">
+        <div className="p-4 border-t border-gray-100 dark:border-gray-800 space-y-3">
+          {/* PWA Install Promotion Banner */}
+          {canInstall && !isInstalled && (
+            <div className="p-3 rounded-2xl bg-gradient-to-br from-indigo-600 to-purple-700 text-white shadow-lg shadow-indigo-600/20 space-y-2 animate-fadeIn">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-2">
+                  <div className="w-6 h-6 rounded-lg bg-white/20 flex items-center justify-center text-xs">
+                    <i className="fas fa-download"></i>
+                  </div>
+                  <span className="text-xs font-bold font-heading">Install Workly</span>
+                </div>
+                <span className="text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded-full bg-white/20">PWA</span>
+              </div>
+              <p className="text-[11px] text-indigo-100 leading-tight">Install app for fast offline access & distraction-free view.</p>
+              <button
+                onClick={handleInstallApp}
+                className="w-full py-1.5 px-3 bg-white text-indigo-700 font-bold text-xs rounded-xl shadow-xs hover:bg-indigo-50 transition flex items-center justify-center space-x-1.5"
+              >
+                <i className="fas fa-arrow-down-to-bracket"></i>
+                <span>Install App</span>
+              </button>
+            </div>
+          )}
+
           <div className="flex items-center justify-between p-2.5 rounded-2xl bg-gray-50 dark:bg-gray-800/60 border border-gray-200/60 dark:border-gray-700/60">
             <div 
               onClick={() => setIsNewProfileModalOpen(true)}
@@ -180,13 +270,13 @@ function AppLayout() {
               title="Click to add new profile"
             >
               <img
-                src={profile.avatarUrl}
-                alt={profile.name}
+                src={displayAvatar}
+                alt={displayName}
                 className="w-9 h-9 rounded-xl object-cover ring-2 ring-indigo-500/30 flex-shrink-0"
               />
               <div className="min-w-0">
-                <h4 className="text-xs font-bold text-gray-900 dark:text-white truncate">{profile.name}</h4>
-                <p className="text-[10px] text-gray-400 truncate">{profile.rollNo} • {profile.semester}</p>
+                <h4 className="text-xs font-bold text-gray-900 dark:text-white truncate">{displayName}</h4>
+                <p className="text-[10px] text-gray-400 truncate">{displayEmail || profile?.rollNo}</p>
               </div>
             </div>
 
@@ -204,6 +294,13 @@ function AppLayout() {
                 title={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
               >
                 <i className={`fas ${isDark ? 'fa-sun text-amber-400' : 'fa-moon text-indigo-500'}`}></i>
+              </button>
+              <button
+                onClick={handleSignOut}
+                className="p-2 rounded-xl bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-400 hover:bg-rose-100 text-xs transition"
+                title="Sign Out / Lock Workspace"
+              >
+                <i className="fas fa-arrow-right-from-bracket"></i>
               </button>
             </div>
           </div>
@@ -249,6 +346,26 @@ function AppLayout() {
 
           {/* Top Actions */}
           <div className="flex items-center space-x-3">
+
+            {/* Offline Status Pill */}
+            {isOffline && (
+              <div className="flex items-center space-x-1.5 px-3 py-1.5 rounded-2xl bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 text-xs font-bold animate-fadeIn">
+                <i className="fas fa-wifi-slash text-xs"></i>
+                <span className="hidden md:inline">Offline Mode</span>
+              </div>
+            )}
+
+            {/* Install App Quick Action */}
+            {canInstall && !isInstalled && (
+              <button
+                onClick={handleInstallApp}
+                className="hidden sm:flex items-center space-x-1.5 px-3.5 py-2 rounded-2xl bg-indigo-50 dark:bg-indigo-950/60 hover:bg-indigo-100 dark:hover:bg-indigo-900/60 border border-indigo-200 dark:border-indigo-800 text-indigo-700 dark:text-indigo-300 text-xs font-bold transition shadow-xs"
+                title="Install Workly App on your device"
+              >
+                <i className="fas fa-download"></i>
+                <span>Install</span>
+              </button>
+            )}
             
             {/* Quick Add Task Button */}
             <button
@@ -413,7 +530,7 @@ function AppLayout() {
                     </div>
                   </div>
 
-                  {/* Actions: Add New Profile + Settings */}
+                  {/* Actions: Add New Profile + Settings + Sign Out */}
                   <div className="pt-2 border-t border-gray-100 dark:border-gray-700 space-y-1.5">
                     <button
                       onClick={() => {
@@ -426,15 +543,29 @@ function AppLayout() {
                       <span>+ Add New Login Profile</span>
                     </button>
 
-                    <button
-                      onClick={() => {
-                        setIsProfileDropdownOpen(false);
-                        setActiveTab('settings');
-                      }}
-                      className="w-full py-1.5 text-center text-xs font-medium text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition"
-                    >
-                      Manage All Profiles & Settings
-                    </button>
+                    <div className="grid grid-cols-2 gap-1.5">
+                      <button
+                        onClick={() => {
+                          setIsProfileDropdownOpen(false);
+                          setActiveTab('settings');
+                        }}
+                        className="py-1.5 px-2 rounded-xl bg-gray-50 dark:bg-gray-750 text-center text-xs font-medium text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition"
+                      >
+                        <i className="fas fa-gear mr-1"></i>
+                        Settings
+                      </button>
+
+                      <button
+                        onClick={() => {
+                          setIsProfileDropdownOpen(false);
+                          handleSignOut();
+                        }}
+                        className="py-1.5 px-2 rounded-xl bg-rose-50 dark:bg-rose-950/40 text-center text-xs font-bold text-rose-600 dark:text-rose-400 hover:bg-rose-100 dark:hover:bg-rose-900/60 transition"
+                      >
+                        <i className="fas fa-arrow-right-from-bracket mr-1"></i>
+                        Sign Out
+                      </button>
+                    </div>
                   </div>
                 </div>
               )}
@@ -442,6 +573,34 @@ function AppLayout() {
 
           </div>
         </header>
+
+        {/* PWA Update Banner */}
+        {isUpdateAvailable && (
+          <div className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-4 py-2.5 sm:px-8 text-xs font-semibold flex items-center justify-between shadow-md animate-fadeIn">
+            <div className="flex items-center space-x-2.5">
+              <i className="fas fa-arrows-rotate animate-spin"></i>
+              <span>A new version of Workly is available with updates!</span>
+            </div>
+            <button
+              onClick={handleReloadApp}
+              className="px-3 py-1 bg-white text-indigo-700 rounded-xl font-bold text-xs hover:bg-indigo-50 transition shadow-xs"
+            >
+              Update Now
+            </button>
+          </div>
+        )}
+
+        {/* Offline Alert Banner */}
+        {isOffline && (
+          <div className="bg-amber-500/15 dark:bg-amber-950/40 border-b border-amber-500/20 text-amber-800 dark:text-amber-200 px-4 py-2 sm:px-8 text-xs font-medium flex items-center justify-between animate-fadeIn">
+            <div className="flex items-center space-x-2">
+              <i className="fas fa-cloud-arrow-down text-amber-600 dark:text-amber-400"></i>
+              <span>
+                <strong>Offline Mode Active:</strong> All changes, tasks, and timetable edits are saved locally and fully functional.
+              </span>
+            </div>
+          </div>
+        )}
 
         {/* MAIN BODY CONTAINER */}
         <main className="flex-1 p-4 sm:p-8 max-w-7xl w-full mx-auto pb-24">
@@ -642,13 +801,53 @@ function AppLayout() {
 }
 
 // -------------------------------------------------------------
-// ROOT ENTRY COMPONENT
+// APP CONTENT ROUTER (AUTHENTICATED VS LOGIN / SIGNUP PORTAL)
+// -------------------------------------------------------------
+function AppContent() {
+  const { toasts } = useAcademic();
+
+  return (
+    <>
+      {/* Toast notifications container rendered globally */}
+      <div className="fixed bottom-5 left-5 z-50 space-y-2 max-w-sm pointer-events-none">
+        {toasts.map(toast => (
+          <div
+            key={toast.id}
+            className={`pointer-events-auto p-4 rounded-2xl shadow-xl border flex items-center space-x-3 text-xs font-bold animate-fadeIn transition-all transform ${
+              toast.type === 'success'
+                ? 'bg-emerald-900/90 text-white border-emerald-700 backdrop-blur-md'
+                : toast.type === 'delete'
+                ? 'bg-rose-900/90 text-white border-rose-700 backdrop-blur-md'
+                : 'bg-gray-900/90 text-white border-gray-700 backdrop-blur-md'
+            }`}
+          >
+            <i className={`fas ${
+              toast.type === 'success' ? 'fa-check-circle text-emerald-400 text-sm' :
+              toast.type === 'delete' ? 'fa-trash-alt text-rose-400 text-sm' :
+              'fa-info-circle text-indigo-400 text-sm'
+            }`}></i>
+            <span className="flex-1">{toast.message}</span>
+          </div>
+        ))}
+      </div>
+
+      <ProtectedRoute>
+        <AppLayout />
+      </ProtectedRoute>
+    </>
+  );
+}
+
+// -------------------------------------------------------------
+// ROOT ENTRY COMPONENT (WITH AUTH & ACADEMIC CONTEXT PROVIDERS)
 // -------------------------------------------------------------
 function App() {
   return (
-    <AcademicProvider>
-      <AppLayout />
-    </AcademicProvider>
+    <AuthProvider>
+      <AcademicProvider>
+        <AppContent />
+      </AcademicProvider>
+    </AuthProvider>
   );
 }
 

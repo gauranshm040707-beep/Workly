@@ -87,7 +87,7 @@ const getPriorityBadge = (priority) => {
 // -------------------------------------------------------------
 function StatCard({ title, value, icon, colorClass, bgGradient, subtext, onClick }) {
   return (
-    <div 
+    <div
       onClick={onClick}
       className={`p-5 rounded-2xl border transition-all duration-200 transform hover:-translate-y-1 hover:shadow-lg cursor-pointer ${bgGradient} border-gray-100 dark:border-gray-800/80`}
     >
@@ -157,7 +157,7 @@ function FocusStudyTimer() {
           {sessionCount} Sessions Done
         </span>
       </div>
-      
+
       <div className="text-center my-3">
         <div className="font-mono text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
           {String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}
@@ -170,9 +170,8 @@ function FocusStudyTimer() {
       <div className="flex items-center justify-center space-x-2">
         <button
           onClick={toggleTimer}
-          className={`px-4 py-1.5 rounded-xl text-xs font-semibold flex items-center space-x-1.5 text-white transition shadow-sm ${
-            isRunning ? 'bg-amber-600 hover:bg-amber-700' : 'bg-indigo-600 hover:bg-indigo-700'
-          }`}
+          className={`px-4 py-1.5 rounded-xl text-xs font-semibold flex items-center space-x-1.5 text-white transition shadow-sm ${isRunning ? 'bg-amber-600 hover:bg-amber-700' : 'bg-indigo-600 hover:bg-indigo-700'
+            }`}
         >
           <i className={`fas ${isRunning ? 'fa-pause' : 'fa-play'}`}></i>
           <span>{isRunning ? 'Pause' : 'Start Focus'}</span>
@@ -206,7 +205,7 @@ function DashboardView({ setActiveTab, onOpenNewTaskModal, onOpenNewProfileModal
   const completedTasks = tasks.filter(t => t.status === 'Completed').length;
   const inProgressTasks = tasks.filter(t => t.status === 'In Progress').length;
   const incompleteTasks = tasks.filter(t => t.status === 'Incomplete').length;
-  
+
   const upcomingExams = exams
     .filter(e => getDaysRemaining(e.date) >= 0)
     .sort((a, b) => new Date(a.date) - new Date(b.date));
@@ -342,10 +341,10 @@ function DashboardView({ setActiveTab, onOpenNewTaskModal, onOpenNewProfileModal
 
       {/* Main Grid: Left Column (Tasks & Deadlines) | Right Column (Progress & Exams & Activity) */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-        
+
         {/* Left Column (7 cols) */}
         <div className="lg:col-span-7 space-y-8">
-          
+
           {/* Today's Tasks Section */}
           <div className="bg-white dark:bg-gray-800/90 rounded-3xl p-6 border border-gray-100 dark:border-gray-800 shadow-sm">
             <div className="flex items-center justify-between mb-5">
@@ -385,22 +384,20 @@ function DashboardView({ setActiveTab, onOpenNewTaskModal, onOpenNewProfileModal
                   return (
                     <div
                       key={task.id}
-                      className={`p-4 rounded-2xl border transition-all flex items-start justify-between gap-4 ${
-                        isDone 
-                          ? 'bg-emerald-50/50 dark:bg-emerald-950/20 border-emerald-200 dark:border-emerald-800/50' 
+                      className={`p-4 rounded-2xl border transition-all flex items-start justify-between gap-4 ${isDone
+                          ? 'bg-emerald-50/50 dark:bg-emerald-950/20 border-emerald-200 dark:border-emerald-800/50'
                           : isOver
-                          ? 'bg-rose-50/40 dark:bg-rose-950/20 border-rose-200 dark:border-rose-800/60'
-                          : 'bg-gray-50/70 dark:bg-gray-750 border-gray-200/80 dark:border-gray-700 hover:border-indigo-300 dark:hover:border-indigo-700'
-                      }`}
+                            ? 'bg-rose-50/40 dark:bg-rose-950/20 border-rose-200 dark:border-rose-800/60'
+                            : 'bg-gray-50/70 dark:bg-gray-750 border-gray-200/80 dark:border-gray-700 hover:border-indigo-300 dark:hover:border-indigo-700'
+                        }`}
                     >
                       <div className="flex items-start space-x-3">
                         <button
                           onClick={() => toggleTaskComplete(task.id)}
-                          className={`mt-0.5 w-6 h-6 rounded-lg border flex items-center justify-center transition-colors ${
-                            isDone 
-                              ? 'bg-emerald-600 border-emerald-600 text-white' 
+                          className={`mt-0.5 w-6 h-6 rounded-lg border flex items-center justify-center transition-colors ${isDone
+                              ? 'bg-emerald-600 border-emerald-600 text-white'
                               : 'border-gray-400 dark:border-gray-600 hover:border-indigo-600 bg-white dark:bg-gray-700 text-transparent hover:text-gray-300'
-                          }`}
+                            }`}
                         >
                           <i className="fas fa-check text-xs"></i>
                         </button>
@@ -409,10 +406,10 @@ function DashboardView({ setActiveTab, onOpenNewTaskModal, onOpenNewProfileModal
                           <h4 className={`text-sm font-semibold ${isDone ? 'line-through text-gray-400 dark:text-gray-500' : 'text-gray-900 dark:text-white'}`}>
                             {task.title}
                           </h4>
-                          
+
                           <div className="flex flex-wrap items-center gap-2 mt-1.5">
                             {sub && (
-                              <span 
+                              <span
                                 className="text-xs px-2 py-0.5 rounded font-medium text-white shadow-xs"
                                 style={{ backgroundColor: sub.color || '#6366f1' }}
                               >
@@ -498,8 +495,8 @@ function DashboardView({ setActiveTab, onOpenNewTaskModal, onOpenNewProfileModal
                       <div className="space-y-1">
                         <div className="flex items-center space-x-2">
                           {sub && (
-                            <span 
-                              className="w-2.5 h-2.5 rounded-full" 
+                            <span
+                              className="w-2.5 h-2.5 rounded-full"
                               style={{ backgroundColor: sub.color || '#6366f1' }}
                             ></span>
                           )}
@@ -541,7 +538,7 @@ function DashboardView({ setActiveTab, onOpenNewTaskModal, onOpenNewProfileModal
 
         {/* Right Column (5 cols) */}
         <div className="lg:col-span-5 space-y-8">
-          
+
           {/* Academic Progress Summary */}
           <div className="bg-white dark:bg-gray-800/90 rounded-3xl p-6 border border-gray-100 dark:border-gray-800 shadow-sm">
             <div className="flex items-center justify-between mb-4">
@@ -792,14 +789,13 @@ function SyllabusView({ onOpenNewSubjectModal }) {
               <button
                 key={sub.id}
                 onClick={() => setSelectedSubjectId(sub.id)}
-                className={`px-4 py-2.5 rounded-2xl text-xs font-bold whitespace-nowrap transition-all flex items-center space-x-2 border ${
-                  isSelected
+                className={`px-4 py-2.5 rounded-2xl text-xs font-bold whitespace-nowrap transition-all flex items-center space-x-2 border ${isSelected
                     ? 'bg-indigo-600 text-white border-indigo-600 shadow-md shadow-indigo-600/20'
                     : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:border-indigo-300'
-                }`}
+                  }`}
               >
-                <span 
-                  className="w-2.5 h-2.5 rounded-full" 
+                <span
+                  className="w-2.5 h-2.5 rounded-full"
                   style={{ backgroundColor: isSelected ? '#ffffff' : (sub.color || '#6366f1') }}
                 ></span>
                 <span>{sub.code || sub.name}</span>
@@ -965,11 +961,10 @@ function SyllabusView({ onOpenNewSubjectModal }) {
                           {unit.topics.map(topic => (
                             <div
                               key={topic.id}
-                              className={`p-3 rounded-2xl border transition flex items-center justify-between gap-3 ${
-                                topic.completed
+                              className={`p-3 rounded-2xl border transition flex items-center justify-between gap-3 ${topic.completed
                                   ? 'bg-emerald-50/40 dark:bg-emerald-950/20 border-emerald-200/60 dark:border-emerald-900/40'
                                   : 'bg-gray-50/50 dark:bg-gray-750/50 border-gray-200/60 dark:border-gray-700'
-                              }`}
+                                }`}
                             >
                               <div className="flex items-center space-x-3 flex-1">
                                 <input
@@ -986,11 +981,10 @@ function SyllabusView({ onOpenNewSubjectModal }) {
                               <div className="flex items-center space-x-2">
                                 <button
                                   onClick={() => toggleTopicImportant(unit.id, topic.id)}
-                                  className={`p-1.5 rounded-lg text-xs transition ${
-                                    topic.important
+                                  className={`p-1.5 rounded-lg text-xs transition ${topic.important
                                       ? 'text-amber-500 bg-amber-50 dark:bg-amber-950/40'
                                       : 'text-gray-300 hover:text-amber-400'
-                                  }`}
+                                    }`}
                                   title="Mark as Exam Important Topic"
                                 >
                                   <i className="fas fa-star"></i>
@@ -1080,17 +1074,15 @@ function ExamsView({ onOpenNewExamModal }) {
           <div className="p-1 rounded-xl bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center">
             <button
               onClick={() => setViewMode('cards')}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition ${
-                viewMode === 'cards' ? 'bg-white dark:bg-gray-700 text-indigo-600 dark:text-white shadow-xs' : 'text-gray-500'
-              }`}
+              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition ${viewMode === 'cards' ? 'bg-white dark:bg-gray-700 text-indigo-600 dark:text-white shadow-xs' : 'text-gray-500'
+                }`}
             >
               <i className="fas fa-th-large mr-1.5"></i> Cards
             </button>
             <button
               onClick={() => setViewMode('table')}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition ${
-                viewMode === 'table' ? 'bg-white dark:bg-gray-700 text-indigo-600 dark:text-white shadow-xs' : 'text-gray-500'
-              }`}
+              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition ${viewMode === 'table' ? 'bg-white dark:bg-gray-700 text-indigo-600 dark:text-white shadow-xs' : 'text-gray-500'
+                }`}
             >
               <i className="fas fa-table mr-1.5"></i> Table
             </button>
@@ -1110,11 +1102,10 @@ function ExamsView({ onOpenNewExamModal }) {
           <button
             key={t}
             onClick={() => setFilterType(t)}
-            className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition ${
-              filterType === t
+            className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition ${filterType === t
                 ? 'bg-rose-600 text-white shadow-sm'
                 : 'bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:border-gray-300'
-            }`}
+              }`}
           >
             {t}
           </button>
@@ -1150,11 +1141,10 @@ function ExamsView({ onOpenNewExamModal }) {
                       {exam.exam_type}
                     </span>
 
-                    <span className={`text-xs font-extrabold px-2.5 py-0.5 rounded-full ${
-                      status === 'Today' ? 'bg-amber-500 text-white animate-bounce' :
-                      status === 'Upcoming' ? 'bg-indigo-100 text-indigo-700 dark:bg-indigo-900/40 dark:text-indigo-300' :
-                      'bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-300'
-                    }`}>
+                    <span className={`text-xs font-extrabold px-2.5 py-0.5 rounded-full ${status === 'Today' ? 'bg-amber-500 text-white animate-bounce' :
+                        status === 'Upcoming' ? 'bg-indigo-100 text-indigo-700 dark:bg-indigo-900/40 dark:text-indigo-300' :
+                          'bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-300'
+                      }`}>
                       {status === 'Today' ? 'TODAY 🔥' : status === 'Upcoming' ? `${daysLeft} Days Left` : 'Completed'}
                     </span>
                   </div>
@@ -1162,7 +1152,7 @@ function ExamsView({ onOpenNewExamModal }) {
                   <h3 className="text-lg font-bold font-heading text-gray-900 dark:text-white mb-1">
                     {exam.exam_name}
                   </h3>
-                  
+
                   <div className="flex items-center space-x-2 text-xs font-semibold text-gray-600 dark:text-gray-400 mb-4">
                     {sub && (
                       <span className="px-2 py-0.5 rounded text-white text-[11px]" style={{ backgroundColor: sub.color || '#6366f1' }}>
@@ -1247,11 +1237,10 @@ function ExamsView({ onOpenNewExamModal }) {
                       {exam.room || "TBA"}
                     </td>
                     <td className="py-4 px-6">
-                      <span className={`text-xs font-bold px-2.5 py-1 rounded-full ${
-                        status === 'Today' ? 'bg-amber-500 text-white' :
-                        status === 'Upcoming' ? 'bg-indigo-100 text-indigo-700 dark:bg-indigo-900/40 dark:text-indigo-300' :
-                        'bg-gray-100 text-gray-500 dark:bg-gray-700 dark:text-gray-400'
-                      }`}>
+                      <span className={`text-xs font-bold px-2.5 py-1 rounded-full ${status === 'Today' ? 'bg-amber-500 text-white' :
+                          status === 'Upcoming' ? 'bg-indigo-100 text-indigo-700 dark:bg-indigo-900/40 dark:text-indigo-300' :
+                            'bg-gray-100 text-gray-500 dark:bg-gray-700 dark:text-gray-400'
+                        }`}>
                         {status === 'Today' ? 'TODAY' : status === 'Upcoming' ? `${daysLeft} Days Remaining` : 'Completed'}
                       </span>
                     </td>
@@ -1361,11 +1350,10 @@ function TasksView({ activeSubTab = 'all', onOpenNewTaskModal }) {
           <button
             key={tab.id}
             onClick={() => setCurrentTab(tab.id)}
-            className={`px-4 py-3 text-xs sm:text-sm font-bold border-b-2 transition-all flex items-center space-x-2 whitespace-nowrap ${
-              currentTab === tab.id
+            className={`px-4 py-3 text-xs sm:text-sm font-bold border-b-2 transition-all flex items-center space-x-2 whitespace-nowrap ${currentTab === tab.id
                 ? 'border-indigo-600 text-indigo-600 dark:text-indigo-400'
                 : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
-            }`}
+              }`}
           >
             <i className={`fas ${tab.icon}`}></i>
             <span>{tab.label}</span>
@@ -1609,19 +1597,17 @@ function TasksView({ activeSubTab = 'all', onOpenNewTaskModal }) {
                 return (
                   <tr
                     key={task.id}
-                    className={`hover:bg-gray-50/50 dark:hover:bg-gray-750/50 transition ${
-                      isOver && !isDone ? 'bg-rose-50/30 dark:bg-rose-950/20' : ''
-                    }`}
+                    className={`hover:bg-gray-50/50 dark:hover:bg-gray-750/50 transition ${isOver && !isDone ? 'bg-rose-50/30 dark:bg-rose-950/20' : ''
+                      }`}
                   >
                     <td className="py-4 px-6 font-semibold text-gray-900 dark:text-white">
                       <div className="flex items-center space-x-2">
                         <button
                           onClick={() => toggleTaskComplete(task.id)}
-                          className={`w-5 h-5 rounded border flex items-center justify-center text-xs transition ${
-                            isDone 
-                              ? 'bg-emerald-600 border-emerald-600 text-white' 
+                          className={`w-5 h-5 rounded border flex items-center justify-center text-xs transition ${isDone
+                              ? 'bg-emerald-600 border-emerald-600 text-white'
                               : 'border-gray-400 hover:border-indigo-600 bg-white dark:bg-gray-700'
-                          }`}
+                            }`}
                         >
                           {isDone && <i className="fas fa-check"></i>}
                         </button>
@@ -1647,11 +1633,10 @@ function TasksView({ activeSubTab = 'all', onOpenNewTaskModal }) {
                       <select
                         value={task.status}
                         onChange={(e) => updateTask(task.id, { status: e.target.value })}
-                        className={`text-xs px-2.5 py-1 rounded-xl font-semibold border focus:outline-none ${
-                          task.status === 'Completed' ? 'bg-emerald-50 text-emerald-700 border-emerald-300' :
-                          task.status === 'In Progress' ? 'bg-purple-50 text-purple-700 border-purple-300' :
-                          'bg-amber-50 text-amber-700 border-amber-300'
-                        }`}
+                        className={`text-xs px-2.5 py-1 rounded-xl font-semibold border focus:outline-none ${task.status === 'Completed' ? 'bg-emerald-50 text-emerald-700 border-emerald-300' :
+                            task.status === 'In Progress' ? 'bg-purple-50 text-purple-700 border-purple-300' :
+                              'bg-amber-50 text-amber-700 border-amber-300'
+                          }`}
                       >
                         <option value="Incomplete">Incomplete</option>
                         <option value="In Progress">In Progress</option>
@@ -1852,7 +1837,7 @@ function SubjectsView({ onOpenNewSubjectModal, setActiveTab }) {
               >
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
-                    <span 
+                    <span
                       className="px-3 py-1 rounded-xl text-xs font-bold text-white shadow-xs"
                       style={{ backgroundColor: sub.color || '#6366f1' }}
                     >
@@ -2051,11 +2036,10 @@ function CalendarView({ onOpenNewTaskModal, onOpenNewExamModal }) {
               <div
                 key={dateStr}
                 onClick={() => events.length > 0 && setSelectedDayEvents({ date: dateStr, events })}
-                className={`h-24 sm:h-28 rounded-2xl p-1.5 sm:p-2 border transition flex flex-col justify-between cursor-pointer ${
-                  isTodayCell
+                className={`h-24 sm:h-28 rounded-2xl p-1.5 sm:p-2 border transition flex flex-col justify-between cursor-pointer ${isTodayCell
                     ? 'border-indigo-600 bg-indigo-50/40 dark:bg-indigo-950/30'
                     : 'border-gray-100 dark:border-gray-700/80 bg-gray-50/60 dark:bg-gray-750/60 hover:bg-gray-100/80'
-                }`}
+                  }`}
               >
                 <div className="flex items-center justify-between">
                   <span className={`text-xs font-bold ${isTodayCell ? 'w-5 h-5 rounded-full bg-indigo-600 text-white flex items-center justify-center' : 'text-gray-700 dark:text-gray-300'}`}>
@@ -2264,9 +2248,8 @@ function RemindersView() {
                     {rem.reminder_type}
                   </td>
                   <td className="py-4 px-6">
-                    <span className={`text-xs px-2.5 py-0.5 rounded-full font-bold ${
-                      rem.status === 'Dismissed' ? 'bg-gray-200 text-gray-600' : 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300'
-                    }`}>
+                    <span className={`text-xs px-2.5 py-0.5 rounded-full font-bold ${rem.status === 'Dismissed' ? 'bg-gray-200 text-gray-600' : 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300'
+                      }`}>
                       {rem.status}
                     </span>
                   </td>
@@ -2486,11 +2469,10 @@ function SettingsView({ onOpenNewProfileModal }) {
             return (
               <div
                 key={p.id}
-                className={`p-4 rounded-2xl border transition-all flex items-center justify-between gap-3 ${
-                  isActive
+                className={`p-4 rounded-2xl border transition-all flex items-center justify-between gap-3 ${isActive
                     ? 'bg-indigo-50/70 dark:bg-indigo-950/40 border-indigo-500 ring-2 ring-indigo-500/20 shadow-sm'
                     : 'bg-gray-50 dark:bg-gray-750 border-gray-200 dark:border-gray-700 hover:border-gray-300'
-                }`}
+                  }`}
               >
                 <div className="flex items-center space-x-3 min-w-0">
                   <img
@@ -2676,6 +2658,112 @@ function SettingsView({ onOpenNewProfileModal }) {
           </button>
         </div>
       </div>
+
+      {/* Progressive Web App (PWA) & Offline System */}
+      <div className="bg-white dark:bg-gray-800 rounded-3xl p-6 sm:p-8 border border-gray-100 dark:border-gray-800 shadow-sm space-y-4">
+        <div className="flex items-center justify-between">
+          <h3 className="text-lg font-bold font-heading text-gray-900 dark:text-white flex items-center space-x-2">
+            <i className="fas fa-mobile-screen-button text-indigo-500"></i>
+            <span>Progressive Web App (PWA) & Offline Engine</span>
+          </h3>
+          <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300">
+            PWA Ready
+          </span>
+        </div>
+        <p className="text-xs text-gray-500 dark:text-gray-400">
+          Workly operates as a standalone Progressive Web App with zero-latency offline caching. You can install it on iOS, Android, macOS, Windows, and Linux.
+        </p>
+
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+          <div className="p-4 rounded-2xl bg-gray-50 dark:bg-gray-750 border border-gray-200/60 dark:border-gray-700/60 space-y-1">
+            <div className="text-xs font-bold text-gray-700 dark:text-gray-300 flex items-center space-x-1.5">
+              <i className="fas fa-signal text-emerald-500"></i>
+              <span>Offline Capability</span>
+            </div>
+            <p className="text-[11px] text-gray-500 dark:text-gray-400">100% Local & Offline. Never lose your assignment list without internet.</p>
+          </div>
+
+          <div className="p-4 rounded-2xl bg-gray-50 dark:bg-gray-750 border border-gray-200/60 dark:border-gray-700/60 space-y-1">
+            <div className="text-xs font-bold text-gray-700 dark:text-gray-300 flex items-center space-x-1.5">
+              <i className="fas fa-shield-halved text-indigo-500"></i>
+              <span>Service Worker</span>
+            </div>
+            <p className="text-[11px] text-gray-500 dark:text-gray-400">Cache Strategy: Stale-While-Revalidate with asset versioning v1.0.0</p>
+          </div>
+
+          <div className="p-4 rounded-2xl bg-gray-50 dark:bg-gray-750 border border-gray-200/60 dark:border-gray-700/60 space-y-1">
+            <div className="text-xs font-bold text-gray-700 dark:text-gray-300 flex items-center space-x-1.5">
+              <i className="fas fa-laptop text-purple-500"></i>
+              <span>App Mode</span>
+            </div>
+            <p className="text-[11px] text-gray-500 dark:text-gray-400">
+              {typeof window !== 'undefined' && (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone)
+                ? 'Running in Standalone Window'
+                : 'Running in Browser Tab'}
+            </p>
+          </div>
+        </div>
+
+        <div className="pt-2 flex flex-wrap gap-3">
+          {typeof window !== 'undefined' && window.pwaInstallPrompt && (
+            <button
+              onClick={async () => {
+                if (window.pwaInstallPrompt) {
+                  window.pwaInstallPrompt.prompt();
+                  await window.pwaInstallPrompt.userChoice;
+                }
+              }}
+              className="px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs shadow-md transition flex items-center space-x-2"
+            >
+              <i className="fas fa-download"></i>
+              <span>Install Workly App</span>
+            </button>
+          )}
+
+          <button
+            onClick={() => {
+              if ('Notification' in window) {
+                Notification.requestPermission().then((permission) => {
+                  if (permission === 'granted') {
+                    addToast("Academic push notifications enabled!", "success");
+                    new Notification("Workly Academic", {
+                      body: "PWA notifications are active and working!",
+                      icon: "icons/icon-192x192.png"
+                    });
+                  } else {
+                    addToast("Notification permission was not granted", "warning");
+                  }
+                });
+              } else {
+                addToast("Notifications are not supported by this browser", "info");
+              }
+            }}
+            className="px-4 py-2.5 rounded-xl bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 text-gray-800 dark:text-gray-200 font-semibold text-xs transition flex items-center space-x-2"
+          >
+            <i className="far fa-bell"></i>
+            <span>Enable System Notifications</span>
+          </button>
+
+          <button
+            onClick={() => {
+              if ('caches' in window) {
+                caches.keys().then((names) => {
+                  return Promise.all(names.map(name => caches.delete(name)));
+                }).then(() => {
+                  addToast("PWA cache refreshed. Reloading...", "info");
+                  setTimeout(() => window.location.reload(), 800);
+                });
+              } else {
+                window.location.reload();
+              }
+            }}
+            className="px-4 py-2.5 rounded-xl bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 text-gray-800 dark:text-gray-200 font-semibold text-xs transition flex items-center space-x-2"
+          >
+            <i className="fas fa-arrows-rotate"></i>
+            <span>Purge & Refresh Offline Cache</span>
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
@@ -2736,11 +2824,10 @@ function NewProfileModal({ isOpen, onClose }) {
                   src={url}
                   alt={`Avatar ${i}`}
                   onClick={() => setFormData({ ...formData, avatarUrl: url })}
-                  className={`w-12 h-12 rounded-2xl object-cover cursor-pointer transition-all flex-shrink-0 ${
-                    formData.avatarUrl === url
+                  className={`w-12 h-12 rounded-2xl object-cover cursor-pointer transition-all flex-shrink-0 ${formData.avatarUrl === url
                       ? 'ring-4 ring-indigo-600 scale-105 shadow-md'
                       : 'opacity-70 hover:opacity-100 hover:scale-105'
-                  }`}
+                    }`}
                 />
               ))}
             </div>
@@ -2821,11 +2908,10 @@ function NewProfileModal({ isOpen, onClose }) {
           <div className="pt-2">
             <label className="block text-xs font-bold text-gray-600 dark:text-gray-400 uppercase mb-2">Initial Workspace Setup</label>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-              <label className={`p-3 rounded-2xl border cursor-pointer transition flex items-start space-x-2 ${
-                templateOption === 'sample'
+              <label className={`p-3 rounded-2xl border cursor-pointer transition flex items-start space-x-2 ${templateOption === 'sample'
                   ? 'bg-indigo-50/60 dark:bg-indigo-950/40 border-indigo-500'
                   : 'bg-gray-50 dark:bg-gray-750 border-gray-200 dark:border-gray-700'
-              }`}>
+                }`}>
                 <input
                   type="radio"
                   name="templateOption"
@@ -2840,11 +2926,10 @@ function NewProfileModal({ isOpen, onClose }) {
                 </div>
               </label>
 
-              <label className={`p-3 rounded-2xl border cursor-pointer transition flex items-start space-x-2 ${
-                templateOption === 'blank'
+              <label className={`p-3 rounded-2xl border cursor-pointer transition flex items-start space-x-2 ${templateOption === 'blank'
                   ? 'bg-indigo-50/60 dark:bg-indigo-950/40 border-indigo-500'
                   : 'bg-gray-50 dark:bg-gray-750 border-gray-200 dark:border-gray-700'
-              }`}>
+                }`}>
                 <input
                   type="radio"
                   name="templateOption"
@@ -3381,6 +3466,947 @@ function SubjectModal({ isOpen, onClose }) {
             </button>
           </div>
         </form>
+      </div>
+    </div>
+  );
+}
+
+// -------------------------------------------------------------
+// COMPONENT: FULL AUTHENTICATION PORTAL (LOGIN / SIGN UP / SWITCHER)
+// -------------------------------------------------------------
+function AuthPortal({ defaultMode = 'signin' }) {
+  const {
+    isDark,
+    setIsDark,
+    loginUser,
+    signUpUser,
+    continueAsGuest,
+    resetPasswordSimulation,
+    profiles,
+    activeUserId,
+    deleteProfile,
+    AVATAR_PRESETS,
+    addToast
+  } = useAcademic();
+
+  const [authMode, setAuthMode] = useState(defaultMode); // 'signin' | 'signup' | 'saved-accounts' | 'forgot-password'
+  const [showPassword, setShowPassword] = useState(false);
+  const [rememberMe, setRememberMe] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [heroFeatureIndex, setHeroFeatureIndex] = useState(0);
+
+  // Sign In Form State
+  const [loginForm, setLoginForm] = useState({
+    emailOrRoll: "gauransh.mittal@university.edu",
+    password: "password123"
+  });
+
+  // Sign Up Form State
+  const [signupForm, setSignupForm] = useState({
+    name: "",
+    email: "",
+    university: "National Institute of Technology",
+    course: "B.Tech Computer Science & Engineering",
+    semester: "Semester 1 (Fall 2026)",
+    rollNo: "",
+    password: "",
+    confirmPassword: "",
+    avatarUrl: AVATAR_PRESETS[0],
+    templateOption: "sample",
+    agreeTerms: true
+  });
+
+  // Forgot Password State
+  const [forgotEmail, setForgotEmail] = useState("");
+  const [forgotSent, setForgotSent] = useState(false);
+
+  // Hero Features Carousel
+  const heroFeatures = [
+    {
+      icon: "fa-book-open",
+      color: "from-blue-500 to-indigo-600",
+      title: "Intelligent Syllabus Tracker",
+      desc: "Granular unit & topic tracking with real-time subject completion gauges and revision stars."
+    },
+    {
+      icon: "fa-list-check",
+      color: "from-purple-500 to-pink-600",
+      title: "Agile Academic Kanban",
+      desc: "Stay ahead of assignment deadlines with automatic overdue alerts and visual progress sliders."
+    },
+    {
+      icon: "fa-file-signature",
+      color: "from-rose-500 to-amber-600",
+      title: "Smart Exam Schedules",
+      desc: "Live countdowns, room allocations, syllabus coverage links, and customizable study alarms."
+    },
+    {
+      icon: "fa-brain",
+      color: "from-emerald-500 to-teal-600",
+      title: "Integrated Focus Companion",
+      desc: "Built-in Pomodoro focus synthesizer, Web Audio notifications, and multi-profile workflow."
+    }
+  ];
+
+  // Auto-rotate hero highlights
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setHeroFeatureIndex(prev => (prev + 1) % heroFeatures.length);
+    }, 4500);
+    return () => clearInterval(timer);
+  }, [heroFeatures.length]);
+
+  // Password strength calculation
+  const passwordStrength = useMemo(() => {
+    const pwd = signupForm.password;
+    if (!pwd) return { score: 0, text: 'None', color: 'bg-gray-300 dark:bg-gray-700' };
+    let score = 0;
+    if (pwd.length >= 6) score += 1;
+    if (pwd.length >= 10) score += 1;
+    if (/[A-Z]/.test(pwd)) score += 1;
+    if (/[0-9]/.test(pwd)) score += 1;
+    if (/[^A-Za-z0-9]/.test(pwd)) score += 1;
+
+    if (score <= 2) return { score, text: 'Weak', color: 'bg-rose-500', width: '30%' };
+    if (score <= 3) return { score, text: 'Good', color: 'bg-amber-500', width: '65%' };
+    return { score, text: 'Strong', color: 'bg-emerald-500', width: '100%' };
+  }, [signupForm.password]);
+
+  // Handle Login Submit
+  const handleLoginSubmit = (e) => {
+    e.preventDefault();
+    if (!loginForm.emailOrRoll.trim()) {
+      addToast("Please enter your email or roll number", "alert");
+      return;
+    }
+    setIsLoading(true);
+    setTimeout(() => {
+      loginUser({
+        emailOrRoll: loginForm.emailOrRoll,
+        password: loginForm.password,
+        rememberMe
+      });
+      setIsLoading(false);
+    }, 400);
+  };
+
+  // Quick 1-click login for demo / saved profile
+  const handleQuickLogin = (profileId) => {
+    setIsLoading(true);
+    setTimeout(() => {
+      loginUser({ profileId });
+      setIsLoading(false);
+    }, 300);
+  };
+
+  // Handle Sign Up Submit
+  const handleSignUpSubmit = (e) => {
+    e.preventDefault();
+    if (!signupForm.name.trim() || !signupForm.email.trim()) {
+      addToast("Please fill in your name and student email.", "alert");
+      return;
+    }
+    if (signupForm.password && signupForm.password !== signupForm.confirmPassword) {
+      addToast("Passwords do not match!", "alert");
+      return;
+    }
+    setIsLoading(true);
+    setTimeout(() => {
+      signUpUser({
+        name: signupForm.name,
+        email: signupForm.email,
+        university: signupForm.university,
+        course: signupForm.course,
+        semester: signupForm.semester,
+        rollNo: signupForm.rollNo || `ID-${Math.floor(1000 + Math.random() * 9000)}`,
+        avatarUrl: signupForm.avatarUrl,
+        password: signupForm.password || "password123"
+      }, signupForm.templateOption);
+      setIsLoading(false);
+    }, 500);
+  };
+
+  // Handle SSO Simulation
+  const handleSSOLogin = (providerName) => {
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+      // Auto sign in as first profile or active
+      loginUser({ profileId: activeUserId || (profiles[0] && profiles[0].id) });
+      addToast(`Authenticated via ${providerName} Single Sign-On!`, "success");
+    }, 600);
+  };
+
+  // Handle Forgot Password
+  const handleForgotSubmit = (e) => {
+    e.preventDefault();
+    if (!forgotEmail.trim()) {
+      addToast("Please enter your student email address", "alert");
+      return;
+    }
+    resetPasswordSimulation(forgotEmail);
+    setForgotSent(true);
+  };
+
+  return (
+    <div className="min-h-screen flex items-center justify-center p-4 sm:p-6 lg:p-8 bg-mesh-light dark:bg-mesh-dark text-gray-900 dark:text-gray-100 transition-colors duration-200">
+
+      {/* Floating Background Glow Orbs */}
+      <div className="fixed top-10 left-10 w-72 h-72 bg-indigo-500/15 dark:bg-indigo-500/10 rounded-full blur-3xl pointer-events-none animate-pulse"></div>
+      <div className="fixed bottom-10 right-10 w-96 h-96 bg-purple-500/15 dark:bg-purple-500/10 rounded-full blur-3xl pointer-events-none animate-pulse"></div>
+
+      {/* Main Container Card */}
+      <div className="relative w-full max-w-6xl rounded-3xl auth-glass-card shadow-2xl overflow-hidden border border-white/60 dark:border-gray-800/80 grid grid-cols-1 lg:grid-cols-12 min-h-[640px]">
+
+        {/* ------------------------------------------------------------- */}
+        {/* LEFT BRAND & HERO COLUMN (lg:col-span-5) */}
+        {/* ------------------------------------------------------------- */}
+        <div className="lg:col-span-5 p-8 sm:p-10 lg:p-12 bg-gradient-to-br from-indigo-700 via-indigo-600 to-purple-800 text-white flex flex-col justify-between relative overflow-hidden">
+
+          {/* Subtle geometric lines */}
+          <div className="absolute inset-0 opacity-10 pointer-events-none bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]"></div>
+
+          {/* Top Brand Header */}
+          <div className="relative z-10 space-y-6">
+            <div className="flex items-center space-x-3">
+              <div className="w-12 h-12 rounded-2xl bg-white/15 backdrop-blur-md flex items-center justify-center text-white text-2xl font-black shadow-lg border border-white/20">
+                <i className="fas fa-graduation-cap"></i>
+              </div>
+              <div>
+                <h1 className="font-heading font-black text-2xl sm:text-3xl tracking-tight text-white flex items-center gap-1.5">
+                  Work<span className="text-amber-300">ly</span>
+                  <span className="text-[10px] uppercase font-bold tracking-widest px-2 py-0.5 rounded-full bg-white/20 text-white ml-2">v2.5 Pro</span>
+                </h1>
+                <p className="text-xs text-indigo-100 font-medium tracking-wide">Academic Workflow Management System</p>
+              </div>
+            </div>
+
+            <div className="space-y-2 pt-2">
+              <h2 className="font-heading font-extrabold text-2xl sm:text-3xl text-white leading-tight">
+                Master your college semester with ease.
+              </h2>
+              <p className="text-sm text-indigo-100/90 leading-relaxed">
+                One unified workspace for syllabus tracking, assignment kanban, exam timetables, and Pomodoro study sessions.
+              </p>
+            </div>
+          </div>
+
+          {/* Middle Dynamic Feature Carousel Card */}
+          <div className="relative z-10 my-8">
+            <div className="p-5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 shadow-xl transition-all duration-300">
+              <div className="flex items-center space-x-3 mb-3">
+                <div className={`w-9 h-9 rounded-xl bg-gradient-to-r ${heroFeatures[heroFeatureIndex].color} flex items-center justify-center text-white text-sm shadow-md`}>
+                  <i className={`fas ${heroFeatures[heroFeatureIndex].icon}`}></i>
+                </div>
+                <div>
+                  <h3 className="font-heading font-bold text-sm text-white">{heroFeatures[heroFeatureIndex].title}</h3>
+                  <span className="text-[10px] text-indigo-200">Key Academic Capability</span>
+                </div>
+              </div>
+              <p className="text-xs text-indigo-100 leading-relaxed">
+                {heroFeatures[heroFeatureIndex].desc}
+              </p>
+
+              {/* Carousel Indicators */}
+              <div className="flex items-center space-x-1.5 mt-4">
+                {heroFeatures.map((_, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setHeroFeatureIndex(idx)}
+                    className={`h-1.5 rounded-full transition-all ${idx === heroFeatureIndex ? 'w-6 bg-amber-300' : 'w-1.5 bg-white/30 hover:bg-white/60'}`}
+                  ></button>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Bottom Trust Metrics & Testimonial */}
+          <div className="relative z-10 pt-4 border-t border-white/15 space-y-3">
+            <div className="grid grid-cols-3 gap-2 text-center">
+              <div className="p-2 rounded-xl bg-white/5 border border-white/10">
+                <p className="font-heading font-black text-lg text-white">50k+</p>
+                <p className="text-[10px] text-indigo-200 uppercase font-semibold">Active Students</p>
+              </div>
+              <div className="p-2 rounded-xl bg-white/5 border border-white/10">
+                <p className="font-heading font-black text-lg text-amber-300">99.4%</p>
+                <p className="text-[10px] text-indigo-200 uppercase font-semibold">On-Time Submissions</p>
+              </div>
+              <div className="p-2 rounded-xl bg-white/5 border border-white/10">
+                <p className="font-heading font-black text-lg text-white">4.9 ★</p>
+                <p className="text-[10px] text-indigo-200 uppercase font-semibold">Student Rating</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* ------------------------------------------------------------- */}
+        {/* RIGHT AUTH FORM COLUMN (lg:col-span-7) */}
+        {/* ------------------------------------------------------------- */}
+        <div className="lg:col-span-7 p-6 sm:p-10 flex flex-col justify-between bg-white dark:bg-gray-900/90">
+
+          {/* Top Bar: Auth Mode Tabs & Theme Switcher */}
+          <div className="flex items-center justify-between pb-6 border-b border-gray-100 dark:border-gray-800">
+
+            {/* Mode Switcher Tabs */}
+            <div className="flex items-center p-1 rounded-2xl bg-gray-100 dark:bg-gray-800 text-xs font-bold">
+              <button
+                type="button"
+                onClick={() => setAuthMode('signin')}
+                className={`px-4 py-2 rounded-xl transition-all ${authMode === 'signin'
+                    ? 'bg-indigo-600 text-white shadow-md'
+                    : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
+                  }`}
+              >
+                <i className="fas fa-right-to-bracket mr-1.5"></i>
+                Sign In
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setAuthMode('signup')}
+                className={`px-4 py-2 rounded-xl transition-all ${authMode === 'signup'
+                    ? 'bg-indigo-600 text-white shadow-md'
+                    : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
+                  }`}
+              >
+                <i className="fas fa-user-plus mr-1.5"></i>
+                Sign Up
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setAuthMode('saved-accounts')}
+                className={`px-3 py-2 rounded-xl transition-all ${authMode === 'saved-accounts'
+                    ? 'bg-indigo-600 text-white shadow-md'
+                    : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
+                  }`}
+                title="View and switch between saved student profiles"
+              >
+                <i className="fas fa-users mr-1"></i>
+                <span className="hidden sm:inline">Accounts ({profiles.length})</span>
+              </button>
+            </div>
+
+            {/* Dark/Light Mode Button */}
+            <button
+              onClick={() => setIsDark(!isDark)}
+              className="p-2.5 rounded-2xl bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:text-indigo-600 transition shadow-xs"
+              title={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
+            >
+              <i className={`fas ${isDark ? 'fa-sun text-amber-400' : 'fa-moon text-indigo-600'}`}></i>
+            </button>
+          </div>
+
+          {/* --------------------------------------------------------- */}
+          {/* TAB 1: SIGN IN VIEW */}
+          {/* --------------------------------------------------------- */}
+          {authMode === 'signin' && (
+            <div className="py-6 space-y-6 animate-fadeIn">
+
+              <div>
+                <h3 className="font-heading font-black text-2xl text-gray-900 dark:text-white">
+                  Welcome back, scholar! 🎓
+                </h3>
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                  Enter your credentials or click any demo account below to instantly jump in.
+                </p>
+              </div>
+
+              {/* Quick 1-Click Demo Profiles */}
+              <div className="space-y-2">
+                <label className="block text-[11px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                  ⚡ 1-Click Instant Demo Login
+                </label>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  {profiles.slice(0, 2).map(p => (
+                    <div
+                      key={p.id}
+                      onClick={() => handleQuickLogin(p.id)}
+                      className="p-3 rounded-2xl bg-indigo-50/70 dark:bg-indigo-950/40 border border-indigo-100 dark:border-indigo-900/60 hover:border-indigo-500 hover:shadow-md cursor-pointer transition-all flex items-center space-x-3 group"
+                    >
+                      <img
+                        src={p.avatarUrl}
+                        alt={p.name}
+                        className="w-10 h-10 rounded-xl object-cover ring-2 ring-indigo-500/30 group-hover:ring-indigo-600 transition"
+                      />
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-center justify-between">
+                          <h4 className="text-xs font-bold text-gray-900 dark:text-white truncate">{p.name}</h4>
+                          <span className="text-[10px] text-indigo-600 dark:text-indigo-400 font-bold group-hover:translate-x-0.5 transition-transform">
+                            Log In →
+                          </span>
+                        </div>
+                        <p className="text-[10px] text-gray-500 dark:text-gray-400 truncate">{p.university}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="relative flex py-1 items-center">
+                <div className="flex-grow border-t border-gray-200 dark:border-gray-800"></div>
+                <span className="flex-shrink mx-3 text-[10px] uppercase font-bold text-gray-400 tracking-wider">Or sign in with email</span>
+                <div className="flex-grow border-t border-gray-200 dark:border-gray-800"></div>
+              </div>
+
+              {/* Login Form */}
+              <form onSubmit={handleLoginSubmit} className="space-y-4">
+
+                {/* Email or Roll No */}
+                <div>
+                  <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1.5">
+                    Student Email or Roll Number <span className="text-rose-500">*</span>
+                  </label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
+                      <i className="fas fa-envelope text-xs"></i>
+                    </div>
+                    <input
+                      type="text"
+                      value={loginForm.emailOrRoll}
+                      onChange={e => setLoginForm({ ...loginForm, emailOrRoll: e.target.value })}
+                      placeholder="e.g. gauransh.mittal@university.edu or CS24B1089"
+                      className="w-full pl-10 pr-4 py-2.5 rounded-2xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-sm text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
+                      required
+                    />
+                  </div>
+                </div>
+
+                {/* Password Field */}
+                <div>
+                  <div className="flex items-center justify-between mb-1.5">
+                    <label className="block text-xs font-bold text-gray-700 dark:text-gray-300">
+                      Password <span className="text-rose-500">*</span>
+                    </label>
+                    <button
+                      type="button"
+                      onClick={() => setAuthMode('forgot-password')}
+                      className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline font-semibold"
+                    >
+                      Forgot password?
+                    </button>
+                  </div>
+
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
+                      <i className="fas fa-lock text-xs"></i>
+                    </div>
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      value={loginForm.password}
+                      onChange={e => setLoginForm({ ...loginForm, password: e.target.value })}
+                      placeholder="••••••••"
+                      className="w-full pl-10 pr-10 py-2.5 rounded-2xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-sm text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
+                      required
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
+                    >
+                      <i className={`fas ${showPassword ? 'fa-eye-slash' : 'fa-eye'} text-xs`}></i>
+                    </button>
+                  </div>
+                </div>
+
+                {/* Remember Me Checkbox */}
+                <div className="flex items-center justify-between text-xs">
+                  <label className="flex items-center space-x-2 cursor-pointer text-gray-600 dark:text-gray-400">
+                    <input
+                      type="checkbox"
+                      checked={rememberMe}
+                      onChange={e => setRememberMe(e.target.checked)}
+                      className="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500 border-gray-300 dark:border-gray-700 dark:bg-gray-800"
+                    />
+                    <span>Remember this session on this device</span>
+                  </label>
+                </div>
+
+                {/* Submit Button */}
+                <button
+                  type="submit"
+                  disabled={isLoading}
+                  className="w-full py-3 px-4 rounded-2xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-heading font-bold text-sm shadow-lg shadow-indigo-600/30 transition-all transform active:scale-[0.99] flex items-center justify-center space-x-2 disabled:opacity-70"
+                >
+                  {isLoading ? (
+                    <>
+                      <i className="fas fa-spinner fa-spin"></i>
+                      <span>Authenticating...</span>
+                    </>
+                  ) : (
+                    <>
+                      <i className="fas fa-right-to-bracket"></i>
+                      <span>Sign In to Workspace</span>
+                    </>
+                  )}
+                </button>
+              </form>
+
+              {/* SSO Integrations */}
+              <div className="space-y-2 pt-2">
+                <p className="text-center text-[10px] font-bold uppercase tracking-wider text-gray-400">
+                  Or Connect with Institutional SSO
+                </p>
+                <div className="grid grid-cols-3 gap-2">
+                  <button
+                    type="button"
+                    onClick={() => handleSSOLogin("Google")}
+                    className="py-2.5 px-3 rounded-2xl bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-750 border border-gray-200 dark:border-gray-700 text-xs font-semibold flex items-center justify-center space-x-1.5 transition text-gray-700 dark:text-gray-300"
+                  >
+                    <i className="fab fa-google text-red-500"></i>
+                    <span className="hidden sm:inline">Google</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => handleSSOLogin("University SAML / EduID")}
+                    className="py-2.5 px-3 rounded-2xl bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-750 border border-gray-200 dark:border-gray-700 text-xs font-semibold flex items-center justify-center space-x-1.5 transition text-gray-700 dark:text-gray-300"
+                  >
+                    <i className="fas fa-university text-indigo-500"></i>
+                    <span className="hidden sm:inline">EduID SSO</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => handleSSOLogin("GitHub Student")}
+                    className="py-2.5 px-3 rounded-2xl bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-750 border border-gray-200 dark:border-gray-700 text-xs font-semibold flex items-center justify-center space-x-1.5 transition text-gray-700 dark:text-gray-300"
+                  >
+                    <i className="fab fa-github text-gray-900 dark:text-white"></i>
+                    <span className="hidden sm:inline">GitHub</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* --------------------------------------------------------- */}
+          {/* TAB 2: SIGN UP VIEW */}
+          {/* --------------------------------------------------------- */}
+          {authMode === 'signup' && (
+            <div className="py-4 space-y-4 animate-fadeIn max-h-[70vh] overflow-y-auto pr-1">
+
+              <div>
+                <h3 className="font-heading font-black text-2xl text-gray-900 dark:text-white">
+                  Create Student Account 🚀
+                </h3>
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
+                  Set up your personalized academic workflow in under 30 seconds.
+                </p>
+              </div>
+
+              <form onSubmit={handleSignUpSubmit} className="space-y-3.5">
+
+                {/* Avatar Picker */}
+                <div>
+                  <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1.5">
+                    Choose Your Student Avatar
+                  </label>
+                  <div className="flex items-center space-x-2 overflow-x-auto pb-1">
+                    {AVATAR_PRESETS.map((url, idx) => (
+                      <img
+                        key={idx}
+                        src={url}
+                        alt={`Avatar ${idx}`}
+                        onClick={() => setSignupForm({ ...signupForm, avatarUrl: url })}
+                        className={`w-11 h-11 rounded-2xl object-cover cursor-pointer transition-all flex-shrink-0 ${signupForm.avatarUrl === url
+                            ? 'ring-4 ring-indigo-600 scale-105 shadow-md'
+                            : 'opacity-70 hover:opacity-100 hover:scale-105'
+                          }`}
+                      />
+                    ))}
+                  </div>
+                </div>
+
+                {/* Name & Email */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1">
+                      Full Name <span className="text-rose-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="e.g. Alex Johnson"
+                      value={signupForm.name}
+                      onChange={e => setSignupForm({ ...signupForm, name: e.target.value })}
+                      className="w-full px-3.5 py-2 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-xs text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1">
+                      Student Email <span className="text-rose-500">*</span>
+                    </label>
+                    <input
+                      type="email"
+                      placeholder="alex.j@university.edu"
+                      value={signupForm.email}
+                      onChange={e => setSignupForm({ ...signupForm, email: e.target.value })}
+                      className="w-full px-3.5 py-2 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-xs text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500"
+                      required
+                    />
+                  </div>
+                </div>
+
+                {/* University & Degree */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1">
+                      University / College
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="National Institute of Technology"
+                      value={signupForm.university}
+                      onChange={e => setSignupForm({ ...signupForm, university: e.target.value })}
+                      className="w-full px-3.5 py-2 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-xs text-gray-900 dark:text-white"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1">
+                      Degree Program / Major
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="B.Tech Computer Science"
+                      value={signupForm.course}
+                      onChange={e => setSignupForm({ ...signupForm, course: e.target.value })}
+                      className="w-full px-3.5 py-2 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-xs text-gray-900 dark:text-white"
+                    />
+                  </div>
+                </div>
+
+                {/* Semester & Student Roll */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1">
+                      Semester
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Semester 3 (Fall 2026)"
+                      value={signupForm.semester}
+                      onChange={e => setSignupForm({ ...signupForm, semester: e.target.value })}
+                      className="w-full px-3.5 py-2 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-xs text-gray-900 dark:text-white"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1">
+                      Roll / Student ID Number
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="CS24B1090"
+                      value={signupForm.rollNo}
+                      onChange={e => setSignupForm({ ...signupForm, rollNo: e.target.value })}
+                      className="w-full px-3.5 py-2 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-xs text-gray-900 dark:text-white"
+                    />
+                  </div>
+                </div>
+
+                {/* Password & Confirm */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1">
+                      Password
+                    </label>
+                    <input
+                      type="password"
+                      placeholder="••••••••"
+                      value={signupForm.password}
+                      onChange={e => setSignupForm({ ...signupForm, password: e.target.value })}
+                      className="w-full px-3.5 py-2 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-xs text-gray-900 dark:text-white"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1">
+                      Confirm Password
+                    </label>
+                    <input
+                      type="password"
+                      placeholder="••••••••"
+                      value={signupForm.confirmPassword}
+                      onChange={e => setSignupForm({ ...signupForm, confirmPassword: e.target.value })}
+                      className="w-full px-3.5 py-2 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-xs text-gray-900 dark:text-white"
+                    />
+                  </div>
+                </div>
+
+                {/* Password Strength Indicator */}
+                {signupForm.password && (
+                  <div className="space-y-1">
+                    <div className="flex items-center justify-between text-[11px]">
+                      <span className="text-gray-500 dark:text-gray-400">Password Strength:</span>
+                      <span className="font-bold">{passwordStrength.text}</span>
+                    </div>
+                    <div className="h-1.5 w-full bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                      <div
+                        className={`h-full ${passwordStrength.color} transition-all duration-300`}
+                        style={{ width: passwordStrength.width }}
+                      ></div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Starter Template Choice */}
+                <div className="p-3 rounded-2xl bg-indigo-50/60 dark:bg-indigo-950/30 border border-indigo-100 dark:border-indigo-900/40 space-y-2">
+                  <label className="block text-[11px] font-bold text-indigo-900 dark:text-indigo-300 uppercase">
+                    Curriculum Initialization
+                  </label>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                    <label className={`p-2.5 rounded-xl border cursor-pointer flex items-center space-x-2 transition ${signupForm.templateOption === 'sample'
+                        ? 'bg-white dark:bg-gray-800 border-indigo-600 shadow-xs font-bold text-indigo-600 dark:text-indigo-400'
+                        : 'border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400'
+                      }`}>
+                      <input
+                        type="radio"
+                        name="templateOption"
+                        checked={signupForm.templateOption === 'sample'}
+                        onChange={() => setSignupForm({ ...signupForm, templateOption: 'sample' })}
+                        className="hidden"
+                      />
+                      <i className="fas fa-magic text-indigo-600"></i>
+                      <span>Load Sample Syllabus & Tasks</span>
+                    </label>
+
+                    <label className={`p-2.5 rounded-xl border cursor-pointer flex items-center space-x-2 transition ${signupForm.templateOption === 'blank'
+                        ? 'bg-white dark:bg-gray-800 border-indigo-600 shadow-xs font-bold text-indigo-600 dark:text-indigo-400'
+                        : 'border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400'
+                      }`}>
+                      <input
+                        type="radio"
+                        name="templateOption"
+                        checked={signupForm.templateOption === 'blank'}
+                        onChange={() => setSignupForm({ ...signupForm, templateOption: 'blank' })}
+                        className="hidden"
+                      />
+                      <i className="fas fa-file text-gray-400"></i>
+                      <span>Start with Blank Workspace</span>
+                    </label>
+                  </div>
+                </div>
+
+                {/* Agree terms */}
+                <label className="flex items-center space-x-2 cursor-pointer text-xs text-gray-600 dark:text-gray-400">
+                  <input
+                    type="checkbox"
+                    checked={signupForm.agreeTerms}
+                    onChange={e => setSignupForm({ ...signupForm, agreeTerms: e.target.checked })}
+                    className="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500"
+                    required
+                  />
+                  <span>I agree to the Academic Code of Conduct and Student Privacy Guidelines</span>
+                </label>
+
+                {/* Submit Button */}
+                <button
+                  type="submit"
+                  disabled={isLoading}
+                  className="w-full py-3 px-4 rounded-2xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-heading font-bold text-sm shadow-lg shadow-indigo-600/30 transition-all flex items-center justify-center space-x-2"
+                >
+                  {isLoading ? (
+                    <>
+                      <i className="fas fa-spinner fa-spin"></i>
+                      <span>Setting Up Your Workspace...</span>
+                    </>
+                  ) : (
+                    <>
+                      <i className="fas fa-rocket"></i>
+                      <span>Create Account & Launch Workspace</span>
+                    </>
+                  )}
+                </button>
+              </form>
+            </div>
+          )}
+
+          {/* --------------------------------------------------------- */}
+          {/* TAB 3: SAVED ACCOUNTS / MULTI-PROFILE PORTAL */}
+          {/* --------------------------------------------------------- */}
+          {authMode === 'saved-accounts' && (
+            <div className="py-6 space-y-6 animate-fadeIn">
+
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="font-heading font-black text-2xl text-gray-900 dark:text-white">
+                    Saved Student Accounts
+                  </h3>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                    Select a student profile to continue your academic session.
+                  </p>
+                </div>
+                <button
+                  onClick={() => setAuthMode('signup')}
+                  className="px-3 py-1.5 rounded-xl bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400 font-bold text-xs hover:bg-indigo-100 flex items-center space-x-1"
+                >
+                  <i className="fas fa-plus"></i>
+                  <span>New Student</span>
+                </button>
+              </div>
+
+              <div className="space-y-3 max-h-80 overflow-y-auto pr-1">
+                {profiles.map(p => {
+                  const isActive = p.id === activeUserId;
+                  return (
+                    <div
+                      key={p.id}
+                      className={`p-4 rounded-2xl border transition-all flex items-center justify-between ${isActive
+                          ? 'bg-indigo-50/80 dark:bg-indigo-950/40 border-indigo-300 dark:border-indigo-800 shadow-sm'
+                          : 'bg-gray-50 dark:bg-gray-800/60 border-gray-200/80 dark:border-gray-700/80 hover:border-indigo-400'
+                        }`}
+                    >
+                      <div className="flex items-center space-x-3.5 min-w-0 flex-1">
+                        <img
+                          src={p.avatarUrl}
+                          alt={p.name}
+                          className="w-12 h-12 rounded-2xl object-cover ring-2 ring-indigo-500/40 flex-shrink-0"
+                        />
+                        <div className="min-w-0">
+                          <div className="flex items-center space-x-2">
+                            <h4 className="font-heading font-bold text-sm text-gray-900 dark:text-white truncate">
+                              {p.name}
+                            </h4>
+                            {isActive && (
+                              <span className="px-2 py-0.5 rounded-full text-[9px] font-bold bg-indigo-600 text-white">
+                                Active Profile
+                              </span>
+                            )}
+                          </div>
+                          <p className="text-xs text-gray-500 dark:text-gray-400 truncate">{p.email}</p>
+                          <p className="text-[11px] text-indigo-600 dark:text-indigo-400 font-medium truncate">
+                            {p.university} • {p.course} ({p.rollNo})
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center space-x-2 ml-3">
+                        <button
+                          type="button"
+                          onClick={() => handleQuickLogin(p.id)}
+                          className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold shadow-md shadow-indigo-600/20 transition flex items-center space-x-1.5"
+                        >
+                          <i className="fas fa-right-to-bracket"></i>
+                          <span>Sign In</span>
+                        </button>
+
+                        {profiles.length > 1 && (
+                          <button
+                            type="button"
+                            onClick={() => deleteProfile(p.id)}
+                            className="p-2 rounded-xl text-gray-400 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/30 transition text-xs"
+                            title="Remove profile"
+                          >
+                            <i className="fas fa-trash-alt"></i>
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+
+              <div className="pt-2 text-center">
+                <button
+                  onClick={() => setAuthMode('signin')}
+                  className="text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:underline"
+                >
+                  ← Back to standard Sign In
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* --------------------------------------------------------- */}
+          {/* TAB 4: FORGOT PASSWORD SIMULATION */}
+          {/* --------------------------------------------------------- */}
+          {authMode === 'forgot-password' && (
+            <div className="py-6 space-y-6 animate-fadeIn">
+
+              <div>
+                <h3 className="font-heading font-black text-2xl text-gray-900 dark:text-white">
+                  Reset Password 🔑
+                </h3>
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                  Enter your registered student email address to receive password recovery instructions.
+                </p>
+              </div>
+
+              {!forgotSent ? (
+                <form onSubmit={handleForgotSubmit} className="space-y-4">
+                  <div>
+                    <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1.5">
+                      Registered Student Email Address <span className="text-rose-500">*</span>
+                    </label>
+                    <div className="relative">
+                      <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
+                        <i className="fas fa-envelope text-xs"></i>
+                      </div>
+                      <input
+                        type="email"
+                        value={forgotEmail}
+                        onChange={e => setForgotEmail(e.target.value)}
+                        placeholder="e.g. gauransh.mittal@university.edu"
+                        className="w-full pl-10 pr-4 py-2.5 rounded-2xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-sm text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="w-full py-3 px-4 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-heading font-bold text-sm shadow-md transition flex items-center justify-center space-x-2"
+                  >
+                    <i className="fas fa-paper-plane"></i>
+                    <span>Send Password Reset Instructions</span>
+                  </button>
+
+                  <div className="text-center pt-2">
+                    <button
+                      type="button"
+                      onClick={() => setAuthMode('signin')}
+                      className="text-xs font-semibold text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400"
+                    >
+                      ← Back to Sign In
+                    </button>
+                  </div>
+                </form>
+              ) : (
+                <div className="p-6 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-center space-y-3">
+                  <div className="w-12 h-12 rounded-full bg-emerald-100 dark:bg-emerald-900/60 text-emerald-600 dark:text-emerald-300 flex items-center justify-center mx-auto text-xl">
+                    <i className="fas fa-check"></i>
+                  </div>
+                  <h4 className="font-heading font-bold text-base text-emerald-900 dark:text-emerald-200">
+                    Reset Link Dispatched!
+                  </h4>
+                  <p className="text-xs text-emerald-700 dark:text-emerald-300/90 leading-relaxed">
+                    A secure password reset link has been dispatched to <b>{forgotEmail}</b>. For demo purposes, you can immediately sign in using your account.
+                  </p>
+                  <button
+                    onClick={() => {
+                      setForgotSent(false);
+                      setAuthMode('signin');
+                    }}
+                    className="px-6 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-md transition mt-2"
+                  >
+                    Proceed to Sign In
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Bottom Guest / Demo Access Shortcut */}
+          <div className="pt-6 border-t border-gray-100 dark:border-gray-800 flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
+            <span>Just exploring?</span>
+            <button
+              onClick={continueAsGuest}
+              className="font-bold text-indigo-600 dark:text-indigo-400 hover:underline flex items-center space-x-1"
+            >
+              <span>Explore as Guest / Instant Preview</span>
+              <i className="fas fa-arrow-right text-[10px]"></i>
+            </button>
+          </div>
+
+        </div>
       </div>
     </div>
   );

@@ -546,6 +546,7 @@ const INITIAL_ACTIVITIES = [
 const STORAGE_KEYS = {
   PROFILES: "acad_flow_profiles_v2",
   ACTIVE_USER_ID: "acad_flow_active_uid_v2",
+  AUTH_STATE: "acad_flow_auth_state_v2",
   SUBJECTS: "acad_flow_subjects_v2",
   SYLLABUS: "acad_flow_syllabus_v2",
   TASKS: "acad_flow_tasks_v2",
@@ -573,6 +574,19 @@ function AcademicProvider({ children }) {
       document.documentElement.classList.remove('dark');
     }
   }, [isDark]);
+
+  // Auth State
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    try {
+      const savedAuth = localStorage.getItem(STORAGE_KEYS.AUTH_STATE);
+      if (savedAuth !== null) return savedAuth === 'true';
+      return true; // Default logged in for existing sessions
+    } catch { return true; }
+  });
+
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEYS.AUTH_STATE, isAuthenticated ? 'true' : 'false');
+  }, [isAuthenticated]);
 
   // Toast notifications state
   const [toasts, setToasts] = useState([]);
@@ -865,6 +879,76 @@ function AcademicProvider({ children }) {
       addToast(`Profile ${target.name} removed.`, "delete");
     }
   }, [profiles, activeUserId, addToast]);
+
+  // -------------------------------------------------------------
+  // AUTHENTICATION OPERATIONS (LOGIN, SIGNUP, LOGOUT, RECOVERY)
+  // -------------------------------------------------------------
+  const loginUser = useCallback(({ emailOrRoll, password, profileId }) => {
+    let matchedProfile = null;
+    
+    if (profileId) {
+      matchedProfile = profiles.find(p => p.id === profileId);
+    } else if (emailOrRoll) {
+      const q = emailOrRoll.trim().toLowerCase();
+      matchedProfile = profiles.find(p => 
+        (p.email && p.email.toLowerCase() === q) || 
+        (p.rollNo && p.rollNo.toLowerCase() === q) ||
+        (p.name && p.name.toLowerCase() === q)
+      );
+    }
+
+    if (!matchedProfile) {
+      // Demo fallback: if entered something, log in as first profile or create instant session
+      if (profiles.length > 0) {
+        matchedProfile = profiles[0];
+      }
+    }
+
+    if (matchedProfile) {
+      setActiveUserId(matchedProfile.id);
+      setIsAuthenticated(true);
+      localStorage.setItem(STORAGE_KEYS.AUTH_STATE, 'true');
+      localStorage.setItem(STORAGE_KEYS.ACTIVE_USER_ID, matchedProfile.id);
+      addToast(`Welcome back, ${matchedProfile.name}! 👋`, "success");
+      playAudioChime('success');
+      return { success: true, profile: matchedProfile };
+    } else {
+      addToast("Account not found. Please create a new account or choose a demo profile.", "alert");
+      return { success: false, error: "Account not found" };
+    }
+  }, [profiles, addToast]);
+
+  const signUpUser = useCallback((profileData, templateOption = 'sample') => {
+    const newProfile = createProfile(profileData, templateOption);
+    setIsAuthenticated(true);
+    localStorage.setItem(STORAGE_KEYS.AUTH_STATE, 'true');
+    if (typeof confetti === 'function') {
+      try {
+        confetti({ particleCount: 120, spread: 80, origin: { y: 0.6 } });
+      } catch (e) {}
+    }
+    return { success: true, profile: newProfile };
+  }, [createProfile]);
+
+  const logoutUser = useCallback(() => {
+    setIsAuthenticated(false);
+    localStorage.setItem(STORAGE_KEYS.AUTH_STATE, 'false');
+    addToast("Signed out from Workly. See you soon!", "info");
+    playAudioChime('switch');
+  }, [addToast]);
+
+  const continueAsGuest = useCallback(() => {
+    setIsAuthenticated(true);
+    localStorage.setItem(STORAGE_KEYS.AUTH_STATE, 'true');
+    addToast("Entered Guest Workspace mode. Enjoy exploring Workly!", "info");
+    playAudioChime('success');
+  }, [addToast]);
+
+  const resetPasswordSimulation = useCallback((email) => {
+    addToast(`Password recovery link sent to ${email || 'your email'}. Check your inbox!`, "success");
+    playAudioChime('reminder');
+    return true;
+  }, [addToast]);
 
   // Request browser notification permission
   const requestNotificationPermission = useCallback(async () => {
@@ -1259,6 +1343,14 @@ function AcademicProvider({ children }) {
     setIsDark,
     toasts,
     addToast,
+    // Auth State & Methods
+    isAuthenticated,
+    setIsAuthenticated,
+    loginUser,
+    signUpUser,
+    logoutUser,
+    continueAsGuest,
+    resetPasswordSimulation,
     // Multi-profile
     profiles,
     activeUserId,
@@ -1309,6 +1401,7 @@ function AcademicProvider({ children }) {
     importDataJSON
   }), [
     isDark, toasts, addToast,
+    isAuthenticated, loginUser, signUpUser, logoutUser, continueAsGuest, resetPasswordSimulation,
     profiles, activeUserId, profile, setProfile, createProfile, switchProfile, deleteProfile,
     subjects, syllabus, tasks, exams, reminders, activities,
     addTask, updateTask, deleteTask, toggleTaskComplete,
